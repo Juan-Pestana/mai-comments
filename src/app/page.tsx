@@ -28,31 +28,39 @@ const asignResponse = (id: number, comments: Icomment[]) => {
 }
 
 const CommentsPage = async () => {
-  const res = await fetch('http://localhost:8000/comments', {
-    cache: 'no-store',
-  })
-  const comments: Icomment[] = await res.json()
-  const ordComments: IordComment[] = comments
-    .filter((c: Icomment) => !c.isResponse)
-    .map((comment: Icomment) => ({
-      id: comment.id,
-      text: comment.text,
-      created_at: comment.created_at,
-      user: comment.user,
-      isResponse: comment.isResponse,
-      post: comment.post,
-      responses:
-        comment.responses && comment.responses.length
-          ? comment.responses
-              .map((resp: number) => asignResponse(resp, comments))
-              .sort(function (a: IordComment, b: IordComment) {
-                return b.created_at - a.created_at
-              })
-          : [],
-    }))
-    .sort(function (a: IordComment, b: IordComment) {
-      return b.created_at - a.created_at
+  let ordComments: IordComment[] = []
+
+  try {
+    const res = await fetch('http://localhost:8000/comments', {
+      cache: 'no-store',
     })
+    if (res.ok) {
+      const comments: Icomment[] = await res.json()
+      ordComments = comments
+        .filter((c: Icomment) => !c.isResponse)
+        .map((comment: Icomment) => ({
+          id: comment.id,
+          text: comment.text,
+          created_at: comment.created_at,
+          user: comment.user,
+          isResponse: comment.isResponse,
+          post: comment.post,
+          responses:
+            comment.responses && comment.responses.length
+              ? comment.responses
+                  .map((resp: number) => asignResponse(resp, comments))
+                  .sort(function (a: IordComment, b: IordComment) {
+                    return b.created_at - a.created_at
+                  })
+              : [],
+        }))
+        .sort(function (a: IordComment, b: IordComment) {
+          return b.created_at - a.created_at
+        })
+    }
+  } catch (error) {
+    console.log(error)
+  }
 
   console.log('estos son los ordComments en el servidor', ordComments)
 
@@ -60,7 +68,7 @@ const CommentsPage = async () => {
     <div className="w-full flex justify-center py-20">
       <div className=" px-2 w-full md:w-1/2 xl:w-1/3">
         <ResponsiveTextArea />
-        <Comments ordComments={ordComments} />
+        {ordComments ? <Comments ordComments={ordComments} /> : null}
       </div>
     </div>
   )
