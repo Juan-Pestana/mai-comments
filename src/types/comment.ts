@@ -3,8 +3,9 @@ export interface Icomment {
   post: string
   text: string
   created_at: number
-  isResponse: boolean
-  responses: number[] | []
+  //  isResponse: boolean
+  // responses: number[] | []
+  parent: number | undefined
   user: {
     name: string
     avatar: string
@@ -16,7 +17,7 @@ export interface IordComment {
   post: string
   text: string
   created_at: number
-  isResponse: boolean
+  //  isResponse: boolean
   responses: IordComment[] | []
   user: {
     name: string

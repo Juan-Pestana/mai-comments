@@ -68,7 +68,6 @@ export function SingleComment(comment: IordComment): JSX.Element {
                 created_at={response.created_at}
                 // addCommentToPost={comment.addCommentToPost}
                 text={response.text}
-                isResponse={response.isResponse}
                 user={response.user}
                 post={response.post}
                 responses={response.responses}

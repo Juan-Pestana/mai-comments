@@ -2,57 +2,40 @@ import ResponsiveTextArea from '@/components/ResponsiveTextArea'
 import Comments from '@/components/Comments'
 import { IordComment } from '@/types/comment'
 import { Icomment } from '@/types/comment'
+import { data } from '@/db/data'
 
 const asignResponse = (id: number, comments: Icomment[]) => {
-  let found = comments.find((c) => c.id === id)
-  let response: any = {}
-  if (found) {
-    response.created = found.created_at
-    response.id = found.id
-    response.isResponse = found.isResponse
-    response.post = found.post
-    response.text = found.text
-    response.user = found.user
-    response.responses = found.responses
-
-    if (response.responses && response.responses.length) {
-      response.responses = response.responses
-        .map((res: number) => asignResponse(res, comments))
-        .sort(function (a: Icomment, b: Icomment) {
+  const response: IordComment[] = comments
+    .filter((c) => c.parent === id)
+    .map((c) => {
+      return {
+        ...c,
+        responses: asignResponse(c.id, comments).sort(function (
+          a: IordComment,
+          b: IordComment
+        ) {
           return b.created_at - a.created_at
-        })
-    }
+        }),
+      }
+    })
+    .sort(function (a: IordComment, b: IordComment) {
+      return b.created_at - a.created_at
+    })
 
-    return response
-  }
+  return response
 }
 
 const CommentsPage = async () => {
   let ordComments: IordComment[] = []
 
   try {
-    const res = await fetch('http://localhost:8000/comments', {
-      cache: 'no-store',
-    })
-    if (res.ok) {
-      const comments: Icomment[] = await res.json()
+    if (data) {
+      const comments: Icomment[] = data.comments
       ordComments = comments
-        .filter((c: Icomment) => !c.isResponse)
+        .filter((c: Icomment) => !c.parent)
         .map((comment: Icomment) => ({
-          id: comment.id,
-          text: comment.text,
-          created_at: comment.created_at,
-          user: comment.user,
-          isResponse: comment.isResponse,
-          post: comment.post,
-          responses:
-            comment.responses && comment.responses.length
-              ? comment.responses
-                  .map((resp: number) => asignResponse(resp, comments))
-                  .sort(function (a: IordComment, b: IordComment) {
-                    return b.created_at - a.created_at
-                  })
-              : [],
+          ...comment,
+          responses: asignResponse(comment.id, comments),
         }))
         .sort(function (a: IordComment, b: IordComment) {
           return b.created_at - a.created_at
@@ -61,8 +44,6 @@ const CommentsPage = async () => {
   } catch (error) {
     console.log(error)
   }
-
-  console.log('estos son los ordComments en el servidor', ordComments)
 
   return (
     <div className="w-full flex justify-center py-20">
