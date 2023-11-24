@@ -4,10 +4,11 @@ import { startTransition, useEffect, useRef } from 'react'
 import withAuth from '@/lib/withAuthIframe'
 
 import { useSession, signIn, getSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { signInUser, signOutUser } from '@/app/actions/authActions'
 import Image from 'next/image'
 import * as z from 'zod'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -38,6 +39,9 @@ const formSchema = z.object({
 
 const ResponsiveTextArea = () => {
   const { data: session, update, status } = useSession()
+  const router = useRouter()
+
+  const newWindow: Window | null = null
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -68,8 +72,29 @@ const ResponsiveTextArea = () => {
     console.log(values)
   }
 
+  const handleLogin = () => {
+    const newWindow = window.open(
+      `http://localhost:3000/auth/signin?callbackUrl=http://127.0.0.1:5500/index.html`,
+      //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,
+      '_blank'
+    )
+    try {
+      newWindow?.focus()
+      setTimeout(() => {
+        window.location.reload()
+        newWindow?.close()
+      }, 4000)
+    } catch {
+      alert(
+        'Pop-up Blocker is enabled! Please add this site to your exception list.'
+      )
+      //or change state to display something different on the page
+    }
+  }
+
   return (
     <div className="flex space-x-3">
+      <Button onClick={handleLogin}>pruebas</Button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
