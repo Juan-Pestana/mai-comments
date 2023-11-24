@@ -4,7 +4,7 @@ import { Providers } from '@/components/providers'
 import { IordComment } from '@/types/comment'
 import { Icomment } from '@/types/comment'
 import { data } from '@/db/data'
-import { auth } from '../../auth'
+import { auth, signIn, signOut } from '../../auth'
 
 const asignResponse = (id: number, comments: Icomment[]) => {
   const response: IordComment[] = comments
@@ -61,7 +61,7 @@ const CommentsPage = async () => {
       <div className="w-full flex justify-center py-20">
         <div className=" px-2 w-full md:w-1/2 xl:w-1/3">
           <ResponsiveTextArea />
-          <hr />
+          <hr className="mb-5" />
           {ordComments ? <Comments ordComments={ordComments} /> : null}
         </div>
       </div>

@@ -24,6 +24,9 @@ export const authConfig = {
       return !!params.auth?.user
     },
   },
+  session: {
+    strategy: 'jwt',
+  },
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)

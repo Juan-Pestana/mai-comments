@@ -7,7 +7,5 @@ export const Providers = ({
   children,
   session,
 }: React.PropsWithChildren<{ session: Session | null }>) => {
-  if (!session) return null
-
   return <SessionProvider session={session}>{children}</SessionProvider>
 }
