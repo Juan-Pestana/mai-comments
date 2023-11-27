@@ -7,6 +7,7 @@ import { useSession, signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { signInUser, signOutUser } from '@/app/actions/authActions'
 import Image from 'next/image'
+import { nextUrl } from '@/lib/url'
 import * as z from 'zod'
 import { set, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -73,7 +74,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
 
   const handleLogin = () => {
     newWindow = window.open(
-      `http://${process.env.NEXTAUTH_URL}/auth/newSignin?callbackUrl=http://127.0.0.1:5500/index.html`,
+      `http://${nextUrl}/auth/newSignin?callbackUrl=http://127.0.0.1:5500/index.html`,
       //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,
       '_blank'
     )
