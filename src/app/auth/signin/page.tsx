@@ -112,7 +112,7 @@ export default function Login() {
   if (!hasCookieAccess) {
     return (
       <button onClick={handleCookieAccess}>
-        We need cookies to work! Please click here to allow
+        We need cookies to work! Click here to allow Please
       </button>
     )
   }
