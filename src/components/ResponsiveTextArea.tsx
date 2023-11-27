@@ -74,7 +74,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
 
   const handleLogin = () => {
     const newWindow = window.open(
-      `http://localhost:3000/auth/signin?callbackUrl=http://127.0.0.1:5500/index.html`,
+      `https://mai-comments.vercel.app//auth/signin?callbackUrl=http://127.0.0.1:5500/index.html`,
       //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,
       '_blank'
     )
