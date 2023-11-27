@@ -82,7 +82,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
       newWindow?.focus()
       setTimeout(() => {
         window.location.reload()
-        newWindow?.close()
+        //   newWindow?.close()
       }, 4000)
     } catch {
       alert(
