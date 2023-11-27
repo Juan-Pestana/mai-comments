@@ -39,7 +39,7 @@ export const authConfig = {
     sessionToken: {
       name: `__Secure-next-auth.session-token`,
       options: {
-        httpOnly: false,
+        httpOnly: true,
         sameSite: 'none',
         path: '/',
         partitioned: true,
@@ -65,7 +65,18 @@ export const authConfig = {
         secure: true,
       },
     },
+    pkceCodeVerifier: {
+      name: 'next-auth.pkce.code_verifier',
+      options: {
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/',
+        partitioned: true,
+        secure: true,
+      },
+    },
   },
+
   // cookies: {
   //   sessionToken: {
   //     name: `__Secure-next-auth.session-token`,

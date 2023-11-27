@@ -95,9 +95,10 @@ export default function Login() {
   }, [])
 
   useEffect(() => {
+    const thisWindow = window.self
     if (session) {
       window.opener.location.reload()
-      window.close()
+      thisWindow.close()
     }
   }, [session])
 

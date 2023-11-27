@@ -37,11 +37,11 @@ const formSchema = z.object({
   notifyCheck: z.boolean().optional(),
 })
 
-const ResponsiveTextArea = () => {
-  const { data: session, update, status } = useSession()
+const ResponsiveTextArea = ({ session }: { session: any }) => {
+  //const { data: session, update, status } = useSession()
   const router = useRouter()
 
-  const newWindow: Window | null = null
+  console.log('session', session)
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 

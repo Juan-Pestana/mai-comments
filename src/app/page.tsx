@@ -31,6 +31,8 @@ const asignResponse = (id: number, comments: Icomment[]) => {
 const CommentsPage = async () => {
   let ordComments: IordComment[] = []
 
+  const session = await auth()
+
   try {
     if (data) {
       const comments: Icomment[] = data.comments
@@ -51,7 +53,7 @@ const CommentsPage = async () => {
   return (
     <div className="w-full flex justify-center py-20">
       <div className=" px-2 w-full md:w-1/2 xl:w-1/3">
-        <ResponsiveTextArea />
+        <ResponsiveTextArea session={session} />
         <hr className="mb-5" />
         {ordComments ? <Comments ordComments={ordComments} /> : null}
       </div>
