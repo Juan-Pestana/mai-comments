@@ -12,6 +12,7 @@ declare module 'next-auth' {
 }
 
 const cookiePrefix = process.env.NODE_ENV === 'production' ? '__Secure-' : ''
+const hostPrefix = process.env.NODE_ENV === 'production' ? '__Host-' : ''
 
 export const authConfig = {
   debug: true,
@@ -37,7 +38,11 @@ export const authConfig = {
 
   cookies: {
     sessionToken: {
-      name: `__Secure-next-auth.session-token`,
+      // name: `__Secure-next-auth.session-token`,
+      name:
+        process.env.NODE_ENV === 'production'
+          ? `${cookiePrefix}next-auth.session-token`
+          : 'next-auth.session-token',
       options: {
         httpOnly: true,
         sameSite: 'none',
@@ -47,7 +52,10 @@ export const authConfig = {
       },
     },
     callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
+      name:
+        process.env.NODE_ENV === 'production'
+          ? `${cookiePrefix}next-auth.callback-url`
+          : 'next-auth.callback-url',
       options: {
         sameSite: 'none',
         path: '/',
@@ -56,7 +64,10 @@ export const authConfig = {
       },
     },
     csrfToken: {
-      name: `__Host-next-auth.csrf-token`,
+      name:
+        process.env.NODE_ENV === 'production'
+          ? `${hostPrefix}next-auth.csrf-token`
+          : 'next-auth.csrf-token',
       options: {
         httpOnly: true,
         sameSite: 'none',
@@ -66,7 +77,10 @@ export const authConfig = {
       },
     },
     pkceCodeVerifier: {
-      name: 'next-auth.pkce.code_verifier',
+      name:
+        process.env.NODE_ENV === 'production'
+          ? `${cookiePrefix}next-auth.pkce.code_verifier`
+          : 'next-auth.pkce.code_verifier',
       options: {
         httpOnly: true,
         sameSite: 'none',
@@ -76,35 +90,6 @@ export const authConfig = {
       },
     },
   },
-
-  // cookies: {
-  //   sessionToken: {
-  //     name: `__Secure-next-auth.session-token`,
-  //     options: {
-  //       path: '/',
-  //       httpOnly: true,
-  //       sameSite: 'none',
-  //       secure: true,
-  //     },
-  //   },
-  //   callbackUrl: {
-  //     name: `__Secure-next-auth.callback-url`,
-  //     options: {
-  //       path: '/',
-  //       sameSite: 'none',
-  //       secure: true,
-  //     },
-  //   },
-  //   csrfToken: {
-  //     name: `__Host-next-auth.csrf-token`,
-  //     options: {
-  //       path: '/',
-  //       httpOnly: true,
-  //       sameSite: 'none',
-  //       secure: true,
-  //     },
-  //   },
-  // },
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)

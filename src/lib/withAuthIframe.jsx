@@ -44,7 +44,7 @@ const withAuth = (Component, options) => {
   return (props) => {
     const browser = useBrowser()
 
-    const { session, loading } = useSession()
+    const { data: session, status } = useSession()
 
     const [checking, setChecking] = useState(true)
     const [hasCookieAccess, setHasCookieAccess] = useState(false)
@@ -98,14 +98,7 @@ const withAuth = (Component, options) => {
     }, [])
 
     //show loading indicator on initialization
-    if (typeof window === 'undefined' || loading || checking) {
-      return <div>Loading...</div>
-    }
-
-    //if this page was opened by our iframe we were able to set cookies. so we have to reload the iframe and the user is logged in. finally close the tab.
-    if (window.opener) {
-      window.opener.location.reload()
-      window.close()
+    if (typeof window === 'undefined' || status === 'loading' || checking) {
       return <div>Loading...</div>
     }
 
@@ -129,6 +122,13 @@ const withAuth = (Component, options) => {
       } else {
         return <button onClick={handleLogin}>Login</button>
       }
+    }
+
+    //if this page was opened by our iframe we were able to set cookies. so we have to reload the iframe and the user is logged in. finally close the tab.
+    if (window.opener && status === 'authenticated') {
+      window.opener.location.reload()
+      window.close()
+      return <div>Loading...</div>
     }
 
     //if our component has a custom option admin check if user is admin otherwise render access denied

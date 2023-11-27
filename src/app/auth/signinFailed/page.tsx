@@ -58,6 +58,14 @@ const useBrowser = () => {
 export default function Login() {
   const browser = useBrowser()
 
+  let newWindow: Window | undefined = undefined
+  let originalWindow: Window | undefined = undefined
+
+  if (window !== undefined) {
+    originalWindow = window.opener
+    newWindow = self
+  }
+
   const { data: session, status, update } = useSession()
 
   const [checking, setChecking] = useState(true)
@@ -94,14 +102,6 @@ export default function Login() {
     checkCookieAccess()
   }, [])
 
-  useEffect(() => {
-    const thisWindow = window.self
-    if (session) {
-      window.opener.location.reload()
-      thisWindow.close()
-    }
-  }, [session])
-
   //show loading indicator on initialization
   if (typeof window === 'undefined' || status === 'loading' || checking) {
     return <div>Loading 1111...</div>
@@ -132,10 +132,12 @@ export default function Login() {
     }
   }
 
-  //if this page was opened by our iframe we were able to set cookies. so we have to reload the iframe and the user is logged in. finally close the tab.
-  if (window.opener) {
-    return <div>Loading.2222..</div>
-  }
+  // //if this page was opened by our iframe we were able to set cookies. so we have to reload the iframe and the user is logged in. finally close the tab.
+  // if (window.opener) {
+  //   window.opener.location.reload()
+  //   window.close()
+  //   return <div>Loading...</div>
+  // }
 
   return <div>signin page</div>
 }

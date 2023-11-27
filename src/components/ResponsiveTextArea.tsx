@@ -27,7 +27,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
-import { log } from 'console'
 
 const formSchema = z.object({
   text: z.string().min(2).max(500),
@@ -41,9 +40,9 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
   //const { data: session, update, status } = useSession()
   const router = useRouter()
 
-  console.log('session', session)
-
   const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  let newWindow: Window | null = null
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,17 +72,17 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
   }
 
   const handleLogin = () => {
-    const newWindow = window.open(
-      `https://mai-comments.vercel.app//auth/signin?callbackUrl=http://127.0.0.1:5500/index.html`,
+    newWindow = window.open(
+      `http://${process.env.NEXTAUTH_URL}/auth/newSignin?callbackUrl=http://127.0.0.1:5500/index.html`,
       //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,
       '_blank'
     )
     try {
       newWindow?.focus()
-      setTimeout(() => {
-        window.location.reload()
-        //   newWindow?.close()
-      }, 4000)
+      // setTimeout(() => {
+      //   window.location.reload()
+      //   newWindow?.close()
+      // }, 4000)
     } catch {
       alert(
         'Pop-up Blocker is enabled! Please add this site to your exception list.'
