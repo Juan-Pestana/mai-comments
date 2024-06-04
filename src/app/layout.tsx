@@ -22,7 +22,7 @@ export default async function RootLayout({
     session.user = {
       name: session.user.name,
       email: session.user.email,
-      picture: session.user.image || '',
+      image: session.user.image || '',
     }
 
   return (

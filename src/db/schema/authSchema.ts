@@ -1,12 +1,6 @@
 import { integer, sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
-// const client = createClient({
-//   url: 'DATABASE_URL',
-//   authToken: 'DATABASE_AUTH_TOKEN',
-// })
-// export const db = drizzle(client)
-
 export const users = sqliteTable('user', {
   id: text('id')
     .primaryKey()
