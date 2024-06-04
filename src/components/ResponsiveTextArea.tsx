@@ -75,7 +75,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
 
   const handleLogin = (provider: string) => {
     newWindow = window.open(
-      `${nextUrl}/auth/newSignin?callbackUrl=${window.parent.location.href}&provider=${provider}`,
+      `${nextUrl}/auth/newSignin`,
       //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,
       '_blank'
     )
