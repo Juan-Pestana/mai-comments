@@ -8,9 +8,10 @@ import { useSearchParams } from 'next/navigation'
 function NewLogin() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const provider = searchParams.get('provider') || 'github'
   useEffect(() => {
     if (typeof window === 'undefined') return
-    signIn('github', {
+    signIn(provider, {
       callbackUrl,
     })
   }, [])

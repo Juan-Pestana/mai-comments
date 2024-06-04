@@ -82,30 +82,9 @@ export default function CommentInput({
     }
   }
 
-  //   const addCommentToPost = async (newCommId: string) => {
-  //     const prevComments = comments?.map((comm) => comm.id)
-
-  //     if (prevComments) {
-  //       await pb
-  //         .collection('posts')
-  //         .update(postId, { comments: [...prevComments, newCommId] })
-  //     } else {
-  //       await pb.collection('posts').update(postId, { comments: [newCommId] })
-  //     }
-  //   }
-
-  //   const addEmoji = (e: any) => {
-  //     const sym = e.unified.split('_')
-  //     const codeArray: any[] = []
-  //     sym.forEach((el: any) => codeArray.push('0x' + el))
-  //     let emoji = String.fromCodePoint(...codeArray)
-  //     const singleValue = getValues('comment')
-  //     setValue('comment', singleValue + emoji)
-  //   }
-
   return (
     <>
-      <div className="flex gap-2 p-1 items-center border-l-4 border-yellow-500 border-solid py-5 ml-16 bg-slate-300 px-2 rounded-xl mb-3">
+      <div className="flex gap-2  items-center border-l-4 border-yellow-500 border-solid py-5 ml-16 bg-slate-300 px-2 mr-1 rounded-xl mb-3">
         <div className="object-cover">
           {user ? (
             <Image
@@ -128,31 +107,6 @@ export default function CommentInput({
               placeholder="what do u think"
               autoFocus={isResponse ? true : false}
             />
-            {/* <span
-            className="p-2 text-lg cursor-pointer hover:text-xl"
-            onClick={async () => {
-              const emojys = (await import('@emoji-mart/data')).default
-              setEmojiData(emojys)
-              setShowEmoji(!showEmoji)
-            }}
-          >
-            <FaRegSmile />
-          </span> */}
-            {/* {showEmoji && (
-            <div className="absolute top-[100%] right-2 z-10">
-              <Picker
-                data={emojiData}
-                emojiSize={20}
-                theme={'dark'}
-                emojiButtonSize={32}
-                onEmojiSelect={addEmoji}
-                maxFrequentRows={1}
-                onClickOutside={() => {
-                  setShowEmoji(false)
-                }}
-              />
-            </div>
-          )} */}
           </div>
         </form>
       </div>

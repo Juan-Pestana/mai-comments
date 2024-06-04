@@ -66,41 +66,65 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
     }
   }, [textChange])
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+
     console.log(values)
   }
 
-  const handleLogin = () => {
+  const handleLogin = (provider: string) => {
     newWindow = window.open(
-      `${nextUrl}/auth/newSignin`,
+      `${nextUrl}/auth/newSignin?callbackUrl=${window.parent.location.href}&provider=${provider}`,
       //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,
       '_blank'
     )
     try {
       newWindow?.focus()
-      // setTimeout(() => {
-      //   window.location.reload()
-      //   newWindow?.close()
-      // }, 4000)
     } catch {
       alert(
         'Pop-up Blocker is enabled! Please add this site to your exception list.'
       )
-      //or change state to display something different on the page
     }
   }
 
   return (
     <div className="flex space-x-3">
-      <Button onClick={handleLogin}>pruebas</Button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className=" flex-1 space-y-2 mb-5"
         >
-          {' '}
+          <div className="flex space-x-3">
+            {watchChecks[0] ? (
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Alias</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Pablito Maravilla" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            ) : null}
+            {watchChecks[1] ? (
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="pablito@maravilla.com" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            ) : null}
+          </div>{' '}
           <div className="flex items-center space-x-3">
             {/* //ojo con esto */}
             {session && (
@@ -197,14 +221,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
                     <span>SignIn</span>
                   </PopoverTrigger>
                   <PopoverContent className="flex flex-col items-center justify-center">
-                    <Button
-                      type="button"
-                      onClick={() =>
-                        startTransition(() => {
-                          signInUser()
-                        })
-                      }
-                    >
+                    <Button type="button" onClick={() => handleLogin('github')}>
                       SignIn with Github
                     </Button>
                   </PopoverContent>
@@ -216,7 +233,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
               )}
             </div>
           </div>
-          <div className="flex space-x-3">
+          {/* <div className="flex space-x-3">
             {watchChecks[0] ? (
               <FormField
                 control={form.control}
@@ -245,7 +262,7 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
                 )}
               />
             ) : null}
-          </div>
+          </div> */}
         </form>
       </Form>
     </div>

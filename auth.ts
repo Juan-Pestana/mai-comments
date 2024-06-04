@@ -1,20 +1,23 @@
 import NextAuth from 'next-auth'
 import type { NextAuthConfig, User } from 'next-auth'
+import { db } from '@/db'
+import { DrizzleAdapter } from '@auth/drizzle-adapter'
 
 import GitHub from 'next-auth/providers/github'
 
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      picture?: string
-    } & Omit<User, 'id'>
-  }
-}
+// declare module 'next-auth' {
+//   interface Session {
+//     user: {
+//       picture?: string
+//     } & Omit<User, 'id'>
+//   }
+// }
 
 const cookiePrefix = process.env.NODE_ENV === 'production' ? '__Secure-' : ''
 const hostPrefix = process.env.NODE_ENV === 'production' ? '__Host-' : ''
 
 export const authConfig = {
+  adapter: DrizzleAdapter(db),
   debug: true,
   providers: [
     GitHub({
