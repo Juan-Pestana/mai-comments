@@ -48,7 +48,8 @@ export const authConfig = {
           : 'next-auth.session-token',
       options: {
         httpOnly: true,
-        sameSite: 'none',
+        //@ts-ignore
+        sameSite: 'None',
         path: '/',
         partitioned: true,
         secure: true,
@@ -60,7 +61,8 @@ export const authConfig = {
           ? `${cookiePrefix}next-auth.callback-url`
           : 'next-auth.callback-url',
       options: {
-        sameSite: 'none',
+        //@ts-ignore
+        sameSite: 'None',
         path: '/',
         partitioned: true,
         secure: true,
@@ -73,7 +75,8 @@ export const authConfig = {
           : 'next-auth.csrf-token',
       options: {
         httpOnly: true,
-        sameSite: 'none',
+        //@ts-ignore
+        sameSite: 'None',
         path: '/',
         partitioned: true,
         secure: true,
@@ -86,7 +89,8 @@ export const authConfig = {
           : 'next-auth.pkce.code_verifier',
       options: {
         httpOnly: true,
-        sameSite: 'none',
+        //@ts-ignore
+        sameSite: 'None',
         path: '/',
         partitioned: true,
         secure: true,
@@ -95,4 +99,5 @@ export const authConfig = {
   },
 } satisfies NextAuthConfig
 
+//@ts-ignore
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)
