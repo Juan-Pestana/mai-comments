@@ -49,7 +49,7 @@ export const authConfig = {
       options: {
         httpOnly: true,
         //@ts-ignore
-        sameSite: 'None',
+        sameSite: 'none',
         path: '/',
         partitioned: true,
         secure: true,
@@ -76,7 +76,7 @@ export const authConfig = {
       options: {
         httpOnly: true,
         //@ts-ignore
-        sameSite: 'None',
+        sameSite: 'none',
         path: '/',
         partitioned: true,
         secure: true,
@@ -89,8 +89,8 @@ export const authConfig = {
           : 'next-auth.pkce.code_verifier',
       options: {
         httpOnly: true,
-        //@ts-ignore
-        sameSite: 'None',
+
+        sameSite: 'none',
         path: '/',
         partitioned: true,
         secure: true,
