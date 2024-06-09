@@ -132,7 +132,7 @@ const withAuth = (Component, options) => {
     if (window.opener && status === 'authenticated') {
       console.log('authenticated')
       window.opener.location.reload()
-      //window.close()
+      window.close()
       return <div>Loading...</div>
     }
 
