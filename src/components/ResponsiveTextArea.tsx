@@ -127,13 +127,13 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
           </div>{' '}
           <div className="flex items-center space-x-3">
             {/* //ojo con esto */}
-            {chechion && (
+            {session && (
               <Popover>
                 <PopoverTrigger className=" ">
-                  {chechion?.user?.image && (
+                  {session?.user?.image && (
                     <Image
                       className="object-cover rounded-full"
-                      src={chechion.user.image}
+                      src={session.user.image}
                       alt="avatar small"
                       //style={{ width: '100%', height: '100%' }}
                       width={70}

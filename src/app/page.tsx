@@ -7,8 +7,6 @@ import { data } from '@/db/data'
 import { auth, signIn, signOut } from '../../auth'
 import { Button } from '@/components/ui/button'
 
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
 const asignResponse = (id: number, comments: Icomment[]) => {
   const response: IordComment[] = comments
     .filter((c) => c.parent === id)
