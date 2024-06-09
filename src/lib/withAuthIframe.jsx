@@ -118,10 +118,11 @@ const withAuth = (Component, options) => {
     if (!session) {
       if (
         window.top === window.self ||
-        !['Safari', 'Firefox', 'Edge', 'Unknown', 'Chrome'].includes(browser) //In this browsers we have to set cookies in first-party context, therefore we are not able to redirect without user interaction
+        !['Safari', 'Firefox', 'Edge', 'Unknown'].includes(browser) //In this browsers we have to set cookies in first-party context, therefore we are not able to redirect without user interaction
       ) {
         signIn('github') //start oauth for my custom provider
-        return <div>Loading...</div>
+        console.log('login in')
+        return <div>Login In</div>
       } else {
         return <button onClick={handleLogin}>Login</button>
       }
@@ -129,8 +130,9 @@ const withAuth = (Component, options) => {
 
     //if this page was opened by our iframe we were able to set cookies. so we have to reload the iframe and the user is logged in. finally close the tab.
     if (window.opener && status === 'authenticated') {
+      console.log('authenticated')
       window.opener.location.reload()
-      window.close()
+      //window.close()
       return <div>Loading...</div>
     }
 
