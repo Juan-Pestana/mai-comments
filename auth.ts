@@ -40,6 +40,7 @@ export const authConfig = {
   },
 
   cookies: {
+    debug: true,
     sessionToken: {
       // name: `__Secure-next-auth.session-token`,
       name:
