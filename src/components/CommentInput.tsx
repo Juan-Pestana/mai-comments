@@ -4,6 +4,7 @@ import { FormEvent, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IordComment } from '@/types/comment'
+import { useSession } from 'next-auth/react'
 
 interface IcommentInputProps {
   postId: string

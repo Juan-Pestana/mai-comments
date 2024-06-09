@@ -38,7 +38,7 @@ const formSchema = z.object({
 })
 
 const ResponsiveTextArea = ({ session }: { session: any }) => {
-  //const { data: session, update, status } = useSession()
+  const { data: chechion, update, status } = useSession()
   const router = useRouter()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -127,13 +127,13 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
           </div>{' '}
           <div className="flex items-center space-x-3">
             {/* //ojo con esto */}
-            {session && (
+            {chechion && (
               <Popover>
                 <PopoverTrigger className=" ">
-                  {session?.user?.image && (
+                  {chechion?.user?.image && (
                     <Image
                       className="object-cover rounded-full"
-                      src={session.user.image}
+                      src={chechion.user.image}
                       alt="avatar small"
                       //style={{ width: '100%', height: '100%' }}
                       width={70}
