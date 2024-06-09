@@ -58,11 +58,13 @@ const withAuth = (Component, options) => {
             location.reload()
           },
           () => {
+            console.log('cookie access denied')
             alert('Cookie access denied. Please allow!')
             //or change state to display something on the page
           }
         )
       } else {
+        console.log('please allow cookies')
         alert('Please allow cookies in your settings')
         //or change state to display something on the page
       }
@@ -75,6 +77,7 @@ const withAuth = (Component, options) => {
         '_blank'
       )
       try {
+        console.log('window opened')
         newWindow.focus()
       } catch {
         alert(
@@ -115,7 +118,7 @@ const withAuth = (Component, options) => {
     if (!session) {
       if (
         window.top === window.self ||
-        !['Safari', 'Firefox', 'Edge', 'Unknown'].includes(browser) //In this browsers we have to set cookies in first-party context, therefore we are not able to redirect without user interaction
+        !['Safari', 'Firefox', 'Edge', 'Unknown', 'Chrome'].includes(browser) //In this browsers we have to set cookies in first-party context, therefore we are not able to redirect without user interaction
       ) {
         signIn('github') //start oauth for my custom provider
         return <div>Loading...</div>
