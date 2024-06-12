@@ -1,5 +1,5 @@
 'use client'
-import { startTransition, useEffect, useRef } from 'react'
+import { startTransition, useEffect, useRef, useState } from 'react'
 
 import withAuth from '@/lib/withAuthIframe'
 
@@ -39,6 +39,8 @@ const formSchema = z.object({
 
 const ResponsiveTextArea = ({ session }: { session: any }) => {
   const { data: chechion, update, status } = useSession()
+  const [sesion, setSession] = useState()
+  console.log(session, chechion)
   const router = useRouter()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -73,7 +75,8 @@ const ResponsiveTextArea = ({ session }: { session: any }) => {
     console.log(values)
   }
 
-  const handleLogin = (provider: string) => {
+  const handleLogin = async (provider: string) => {
+    //signIn('github')
     newWindow = window.open(
       `${nextUrl}/auth/newSignin`,
       //    `http://localhost:3000/auth/signin?callbackUrl=${window.parent.location.href}`,

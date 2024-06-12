@@ -40,7 +40,6 @@ export const authConfig = {
   },
 
   cookies: {
-    debug: true,
     sessionToken: {
       // name: `__Secure-next-auth.session-token`,
       name:
@@ -48,6 +47,7 @@ export const authConfig = {
           ? `${cookiePrefix}next-auth.session-token`
           : 'next-auth.session-token',
       options: {
+        domain: 'https://mai-comments.vercel.app/',
         httpOnly: true,
         //@ts-ignore
         sameSite: 'none',
@@ -63,7 +63,7 @@ export const authConfig = {
           : 'next-auth.callback-url',
       options: {
         //@ts-ignore
-        sameSite: 'None',
+        sameSite: 'none',
         path: '/',
         partitioned: true,
         secure: true,
